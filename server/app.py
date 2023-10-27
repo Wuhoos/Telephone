@@ -16,12 +16,12 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 def storyGenerator():
     data = request.get_json()
     prompt = data.get('prompt')
-    print(prompt)
+    # print(prompt)
 
     if not prompt:
         return make_response(jsonify({'error':"need a prompt"}),400)
     try:
-        messages = [{"role": "user", "content": f'write me a short story that is no longer than 8 sentences about {prompt}'}]
+        messages = [{"role": "user", "content": f'write me a short story that is less than 75 words about {prompt}'}]
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages= messages,
@@ -29,7 +29,7 @@ def storyGenerator():
         )
 
         story = response.choices[0].message.content
-        print(story)
+        # print(story)
 
         return make_response(jsonify({"content": story}), 200)
     
@@ -47,7 +47,7 @@ def imageGenerator():
     # if not imagePrompt:
     #     return make_response(jsonify({'error': 'need imagePrompt'}),400)
     try:
-        PROMPT = f'One Piece anime style image of ${imagePrompt}'
+        PROMPT = f'3d style image of ${imagePrompt}'
         response = openai.Image.create(
             prompt = PROMPT,
             n = 1,
@@ -66,7 +66,7 @@ def imageGenerator():
 
     except Exception as e:
         print(e)
-        return make_response(jsonify({'error': 'cannot generate'}),400)
+        return make_response(jsonify({'error': 'promot have to be less than less 1000 character'}),400)
     
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

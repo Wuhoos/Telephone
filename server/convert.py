@@ -8,7 +8,7 @@ IMAGE_DIR = Path.cwd() / "images" / JSON_FILE.stem
 
 IMAGE_DIR.mkdir(parents=True, exist_ok=True)
 
-with open("/Users/david/Development/projects/telephone-with-ai/server/responses/One P-1698265611.json", mode="r", encoding="utf-8") as file:
+with open("/Users/david/Development/projects/telephone-with-ai/server/responses/3d st-1698339367.json", mode="r", encoding="utf-8") as file:
     response = json.load(file)
 
 for index, image_dict in enumerate(response["data"]):
