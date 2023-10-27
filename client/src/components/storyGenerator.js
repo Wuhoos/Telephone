@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ImageGenerator from './imageGenerator';
 
 
 function StoryGenerator() {
@@ -10,9 +11,9 @@ function StoryGenerator() {
     // const [storyType, setStoryType] = useState('short story')
     // const [isStorySaved, setIsStorySaved] = useState(false)
     // const [showImagePrompt, setShowImagePrompt] = useState('')
-    // const [imageBase, setImageBase] = useState('')
+    const [image64, setImage64] = useState('')
 
-    async function handleSubmit(e){
+    async function handleStorySubmit(e){
         e.preventDefault();
 
         if (prompt.length < 15){
@@ -47,17 +48,24 @@ function StoryGenerator() {
         setError('')
     }
 
+    function handleImagePrompt(baseImage){
+        setImage64(baseImage)
+    }
+
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleStorySubmit}>
                 <label>Write a short idea for a story</label>
                 <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} />
                 <div style={{display: 'flex'}}>
                     <button type='submit'>{isStoryGenerated ? 'Regenrate' : 'Generates'}</button>
+                    
                 </div>
             </form>
-            {generating ? <em>Generating...</em> : <pre>This is a story about..... {story}</pre>}
+            <h1>This is a story about..... </h1>
+            {generating ? <em>Generating...</em> : <pre>{story}</pre>}
+            <ImageGenerator handleImagePrompt={handleImagePrompt}/>
         </div>
     )
 }
