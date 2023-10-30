@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ImageToStoryGenerator from './imageToStoryGenerator';
 
 function ImageGenerator({handleImagePrompt}){
 
@@ -57,6 +58,7 @@ function ImageGenerator({handleImagePrompt}){
                     <img src={`data:image/png;base64,${image64}`} alt={imagePrompt}/>
                 </div>
             ) : null}
+            <ImageToStoryGenerator image64={image64}/>
         </div>
     )
 }
