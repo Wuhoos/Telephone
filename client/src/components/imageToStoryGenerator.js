@@ -14,7 +14,7 @@ function ImageToStoryGenerator({image64}) {
         setGenerating(true)
 
         try{
-            const response = await fetch('http://127.0.0.1:5555/imageToStoryGenerator', {
+            const response = await fetch('/imageToStoryGenerator', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({image64: image64})

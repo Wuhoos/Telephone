@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ImageGenerator from './imageGenerator';
 
 
-function StoryGenerator() {
+function StoryGenerator({user}) {
     const [prompt, setPrompt] = useState('')
     const [story, setStory] = useState('')
     const [error, setError] = useState('')
@@ -23,14 +23,14 @@ function StoryGenerator() {
         setGenerating(true);
 
         try {
-            const response = await fetch('http://127.0.0.1:5555/storyGenerator', {
+            const response = await fetch('/storyGenerator', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({prompt})
             });
 
              if (!response.ok){
-                throw new Error(`Filed to generate: ${response.status}`)
+                throw new Error(`Failed to generate: ${response.status}`)
             }
             const data = await response.json();
             setStory(data.content)
