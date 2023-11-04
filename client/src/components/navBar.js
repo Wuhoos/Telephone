@@ -15,9 +15,11 @@ function NavBar({user, setUser}) {
     }
 
     return (
-        user ? (
-            <button onClick={logout}>Logout</button>
-        ) : null
+        <div>
+                {user ? (
+                    <button onClick={logout} className='border-2 text-white bg-black border-black'>Logout</button>
+                ) : null}
+        </div>
     )
 }
 

@@ -29,11 +29,15 @@ function SignUpForm({onLogin}){
     }
 
     return (
-        <form onSubmit={handleSignUp}>
-            New Username:
-            <input type='text' id='username' autoComplete='off' value={username} onChange={(e)=>setUsername(e.target.value)} />
-            New Password:
-            <input type='password' id='password' autoComplete='off' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+        <form onSubmit={handleSignUp} className="space-y-10 underline mt-10 font-bold">
+            <div>
+                New Username:
+                <input type='text' id='username' autoComplete='off' value={username} onChange={(e)=>setUsername(e.target.value)} className="border-2 ml-4"/>
+            </div>
+            <div>
+                New Password:
+                <input type='password' id='password' autoComplete='off' value={password} onChange={(e)=>setPassword(e.target.value)} className="border-2 ml-4"/>
+            </div>
             <button type='submit'>{isLoading ? 'Loading...' : 'Sign Up'}</button>
             {errors.map((err) => (
                 <p key={err} style={{color: 'red'}} >{err}</p>

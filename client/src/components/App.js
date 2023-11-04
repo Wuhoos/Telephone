@@ -3,6 +3,7 @@ import { Route, Routes, Link} from 'react-router-dom'
 import StoryGenerator from './storyGenerator'
 import Login from './login'
 import NavBar from './navBar'
+import StoryList from './storyList'
 
 function App(){
     
@@ -11,7 +12,7 @@ function App(){
     useEffect(() => {
         fetch('/checkSession').then((res) => {
             if (res.ok) {
-                console.log(res)
+                // console.log(res)
                 
                 res.json().then((data) =>{setUser(data)})
             }else{
@@ -22,18 +23,21 @@ function App(){
 
     return (
         <>
-            <div>
-                <h1>Telephone</h1>
-                <NavBar user={user} setUser={setUser} />
-                {user ? (
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                ): (<p>WELCOME</p>)
-                }
+            <div >
+                <h1 className='bg-red-200 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1>
+                <div className='text-right mr-5 justify-end'>
+                    {user && (
+                        <div className='text-right mr-5 justify-end'>
+                            <NavBar user={user} setUser={setUser} />
+                            {user ? (<Link to='/' className='mr-4'>Home</Link>): null}
+                            <Link to='/stories'>Stories</Link>
+                        </div>
+                    )}
+                </div>
             </div>
             <Routes>
                 <Route path='/' element={user ? <StoryGenerator user={user}/> : <Login onLogin={setUser}/>} />
+                <Route path='/stories' element={user ? <StoryList user={user}/> : <Login onLogin={setUser}/>} />
             </Routes>
         </>
        

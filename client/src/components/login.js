@@ -8,13 +8,13 @@ function Login({onLogin}) {
     const [showLogin, setShowLogin] = useState(true)
 
     return (
-        <div>
+        <div className='text-center'>
             {/* <h1>Telephone</h1> */}
             {showLogin ? (
                 <>
                 <LoginForm onLogin={onLogin}/>
-                <p>Need a account?
-                    <button onClick={() => setShowLogin(false)}>
+                <p className='underline'>Need a account?
+                    <button onClick={() => setShowLogin(false)} className='ml-4 font-bold'>
                         Sign Up
                     </button>
                 </p>
@@ -22,9 +22,9 @@ function Login({onLogin}) {
             ) : (
                 <>
                     <SignUpForm onLogin={onLogin}/>
-                    <p>
+                    <p className='underline'>
                         Have an account?
-                        <button onClick={() => setShowLogin(true)}>
+                        <button onClick={() => setShowLogin(true)} className='ml-4 font-bold'>
                             Log In
                         </button>
                     </p>

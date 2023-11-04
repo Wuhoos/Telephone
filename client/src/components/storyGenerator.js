@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import ImageGenerator from './imageGenerator';
+import { use } from 'bcrypt/promises';
 
 
 function StoryGenerator({user}) {
@@ -8,8 +9,8 @@ function StoryGenerator({user}) {
     const [error, setError] = useState('')
     const [generating, setGenerating] = useState(false)
     const [isStoryGenerated, setIsStoryGenerated] = useState(false)
-    // const [storyType, setStoryType] = useState('short story')
-    // const [isStorySaved, setIsStorySaved] = useState(false)
+    const [saveStory, setSaveStory] = useState(false)
+    const [storyID, setStoryID] = useState(null)
     // const [showImagePrompt, setShowImagePrompt] = useState('')
     const [image64, setImage64] = useState('')
 
@@ -52,20 +53,51 @@ function StoryGenerator({user}) {
         setImage64(baseImage)
     }
 
+    async function handleSave() {
+        try {
+            const response = await fetch('/saveStories', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    storyPrompt: prompt,
+                    theStory: story,
+                    user_id: user.id
+                })
+            })
+            if (!response.ok) {
+                throw new Error(`Failed to save: ${response.status}`)
+            }
+
+            const data = await response.json()
+            setStoryID(data.id)
+            setSaveStory(true)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
 
     return (
-        <div>
-            <form onSubmit={handleStorySubmit}>
-                <label>Write a short idea for a story</label>
-                <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} />
-                <div style={{display: 'flex'}}>
-                    <button type='submit'>{isStoryGenerated ? 'Regenrate' : 'Generates'}</button>
-                    
+        <div className='text-center'>
+            <form onSubmit={handleStorySubmit} className='text-center'>
+                <div>
+                    <label>Write a short idea for a story</label>
+                </div>
+                <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} className='border-2' />
+                <div className='text-center'>
+                    <button type='submit' className='border-2 border-black font-bold'>{isStoryGenerated ? 'Regenrate' : 'Generates'} </button>
                 </div>
             </form>
-            <h1>This is a story about..... </h1>
-            {generating ? <em>Generating...</em> : <pre>{story}</pre>}
-            <ImageGenerator handleImagePrompt={handleImagePrompt}/>
+            <div className='mt-20'>
+                {isStoryGenerated && <button type='button' onClick={handleSave} className='border-2 mt-4 border-black font-bold'>Save Story</button>}
+                <h1 className='my-2'>This is a story about..... </h1>
+                <div className='flex items-center box-border h-20 w-100 p-6 mt-5'>
+                    {generating ? <em>Generating...</em> : <p className=' border-black border-2'>{story}</p>}
+                </div>
+            </div>
+            <div className='place-content-center'>
+                <ImageGenerator handleImagePrompt={handleImagePrompt} storyId={storyID} story={story}/>
+            </div>
         </div>
     )
 }

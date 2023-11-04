@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 
-function ImageToStoryGenerator({image64}) {
+function ImageToStoryGenerator({image64, storyId}) {
 
     const [generating, setGenerating] = useState(false)
     const [isStoryGenerated, setIsStoryGenerated] = useState(false)
     const [story, setStory] = useState('')
     const [imageToStoryPrompt, setImageToStoryPrompt] = useState('')
     const [error, setError] = useState('')
+    const [isStorySaved, setIsStorySaved] = useState(false)
 
     async function handleImageToStorySubmit(e) {
         e.preventDefault()
@@ -41,15 +42,35 @@ function ImageToStoryGenerator({image64}) {
         }
     }
 
+    async function saveImageToStory() {
+
+        try {
+            const response= await fetch(`/saveStories/${storyId}`, {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({storyFromImage: story})
+            })
+            if (!response.ok) {
+                throw new Error(`Failed to save: ${response.status}`)
+            }
+            setIsStorySaved(true)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
     return (
-        <div>
+        <div className='mt-5'>
+            <h1>Based on this image....</h1>
+            <div className='flex items-center p-6 mt-5'>
+                {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black mt-4'>{story}</p> }
+            </div>
             <form onSubmit={handleImageToStorySubmit}>
-                <div>
-                    <button type='submit'>{isStoryGenerated ? 'Regenerate' : 'Generate Story'}</button>
+                <div className='my-5 font-bold'>
+                    <button type='submit' className='border-2 border-black'>{isStoryGenerated ? 'Regenerate' : 'Generate Story'}</button>
+                    {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-3'> Save Story</button>}
                 </div>
             </form>
-            <h1>Based on this image....</h1>
-            {generating ? <em>Generating...</em> : <pre>{story}</pre> }
             {error ? <p style={{color:'red'}}>{error}</p> : null}
         </div>
     )
