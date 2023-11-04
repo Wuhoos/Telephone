@@ -234,6 +234,65 @@ def checkSession():
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
+@app.post('/saveStories')
+def saveingStories():
+    data = request.get_json()
+
+    try:
+        newStory = Story(
+            storyPrompt = data.get('storyPrompt'),
+            theStory = data.get('theStory'),
+            imageBase64 = data.get('iamgeBase64'),
+            storyFromImage = data.get('storyFromImage'),
+            user_id = data.get('user_id')
+        )
+        db.session.add(newStory)
+        db.session.commit()
+    
+        return make_response(jsonify(newStory.to_dict()), 201)
+    except ValueError:
+        return make_response(jsonify({'error':'validation errors'}), 400)
+    
+
+@app.patch('/saveStories/<int:id>')
+def updateStory(id):
+    story = Story.query.filter(Story.id==id).first()
+    data = request.get_json()
+
+    if not story:
+        return make_response(jsonify({'error':'story not found'}),404)
+    
+    try:
+        for n in data:
+            setattr(story, n, data[n])
+
+        db.session.add(story)
+        db.session.commit()
+        return make_response(jsonify(story.to_dict()),200)
+    except ValueError:
+        return make_response(jsonify({'error': 'validation error'}))
+    
+@app.get('/stories')
+def allStories():
+    stories = Story.query.all()
+    story = [story.to_dict() for story in stories]
+    return make_response(jsonify(story), 200)
+
+@app.get('/users/<int:user_id>/stories')
+def userStories(user_id):
+    stories = Story.query.filter(Story.user_id==user_id).all()
+    data = [story.to_dict() for story in stories]
+    return make_response(jsonify(data), 200)
+
+@app.delete('/stories/<int:id>')
+def deleteStory(id):
+    story = Story.query.filter(Story.id == id).first()
+    if not story:
+        return make_response(jsonify({'error':'not found'}))
+    db.session.delete(story)
+    db.session.commit()
+    return make_response(jsonify({}), 202)
+
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

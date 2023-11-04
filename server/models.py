@@ -21,8 +21,10 @@ class Story(db.Model, SerializerMixin):
     __tablename__ = 'stories'
 
     id = db.Column(db.Integer, primary_key =True)
-    content = db.Column(db.String)
+    theStory = db.Column(db.String)
+    storyPrompt = db.Column(db.String)
     imageBase64 = db.Column(db.Text)
+    storyFromImage = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
