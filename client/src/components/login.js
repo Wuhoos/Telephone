@@ -9,18 +9,18 @@ function Login({onLogin}) {
 
     return (
         <div className='text-center'>
-            {/* <h1>Telephone</h1> */}
+            
             {showLogin ? (
-                <>
+                <div>
                 <LoginForm onLogin={onLogin}/>
                 <p className='underline'>Need a account?
                     <button onClick={() => setShowLogin(false)} className='ml-4 font-bold'>
                         Sign Up
                     </button>
                 </p>
-                </>
+                </div>
             ) : (
-                <>
+                <div>
                     <SignUpForm onLogin={onLogin}/>
                     <p className='underline'>
                         Have an account?
@@ -28,7 +28,7 @@ function Login({onLogin}) {
                             Log In
                         </button>
                     </p>
-                </>
+                </div>
             )}
         </div>
     )

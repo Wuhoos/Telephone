@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ImageToStoryGenerator from './imageToStoryGenerator';
 
-function ImageGenerator({handleImagePrompt, storyId, story}){
+function ImageGenerator({ storyId, story, setImageBase64}){
 
     const [imagePrompt, setImagePrompt] = useState('')
     const [image64, setImage64] = useState('')
@@ -21,8 +21,6 @@ function ImageGenerator({handleImagePrompt, storyId, story}){
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({imagePrompt: story})
             })
-            console.log(imagePrompt)
-            console.log(`this is the response : ${response}`)
 
             if (!response.ok){
                 throw new Error(`Failed to generate image: ${response.status}`)
@@ -30,9 +28,9 @@ function ImageGenerator({handleImagePrompt, storyId, story}){
 
             const data = await response.json()
             setImage64(data.image64)
-            handleImagePrompt(data.image64)
+            setImageBase64(data.image64)
             setIsImageGenerated(true)
-            console.log(data.image64)
+
 
         } catch (error) {
             setError(error.message);
@@ -43,8 +41,9 @@ function ImageGenerator({handleImagePrompt, storyId, story}){
         }
     }
 
+    
     async function handleSaveImage() {
-
+        
         try {
             const response= await fetch(`/saveStories/${storyId}`, {
                 method: 'PATCH',
@@ -59,25 +58,29 @@ function ImageGenerator({handleImagePrompt, storyId, story}){
             setError(error.message)
         }
     }
-
+    
+    
     return (
-        <div className='place-content-center mt-5'>
+        <div className='place-content-center mt-5 bg-gray-300/50'>
+            <div className='flex justify-center mt-5 content-evenly'>
+                <div>
+                    {image64 ? (
+                            <img src={`data:image/png;base64,${image64}`} alt={imagePrompt} className='mt-5'/>
+                    ) :null}
+                </div>
+                <div>
+                    
+                </div>
             <form onSubmit={handleImageSubmit}>
-                <div className='font-bold'>
-                    <button type='submit' className='border-2 border-black mt-5 '>{isImageGenerated ? 'Regenerate' : 'Generate Image'}</button>
+                <div className='font-bold ml-4'>
+                    <button type='submit' className='border-2 border-black mt-5'>{isImageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
                     {isImageGenerated && <button type="button" onClick={handleSaveImage} className='border-2 border-black ml-3'>Save Image</button>}
                 </div>
             </form>
             {generating ? <em>Please hold, generating image...</em> : null }
             {error ? <p style={{color:'red'}}>{error}</p> : null}
-            <div className='flex justify-center mt-5'>
-                {image64 ? (
-                    <div>
-                        <img src={`data:image/png;base64,${image64}`} alt={imagePrompt} className='mt-5'/>
-                    </div>
-                ) : null}
             </div>
-            <ImageToStoryGenerator image64={image64} storyId={storyId}/>
+                {isImageGenerated ? <ImageToStoryGenerator image64={image64} storyId={storyId}/> : null}
         </div>
     )
 }

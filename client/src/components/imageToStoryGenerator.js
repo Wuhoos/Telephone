@@ -11,7 +11,7 @@ function ImageToStoryGenerator({image64, storyId}) {
 
     async function handleImageToStorySubmit(e) {
         e.preventDefault()
-
+        // console.log(imageBase64)
         setGenerating(true)
 
         try{
@@ -20,8 +20,8 @@ function ImageToStoryGenerator({image64, storyId}) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({image64: image64})
             })
-            console.log(imageToStoryPrompt)
-            console.log(`this is the response: ${response}`)
+
+
 
             if (!response.ok){
                 throw new Error(`Failed to generate image: ${response.status}`)
@@ -31,8 +31,8 @@ function ImageToStoryGenerator({image64, storyId}) {
             setImageToStoryPrompt(data.imageToStoryPrompt)
             setStory(data.story)
             setIsStoryGenerated(true)
-            console.log(data.image64)
-            console.log(data.story)
+
+
 
         }   catch (error) {
             setError(error.message)
@@ -60,16 +60,19 @@ function ImageToStoryGenerator({image64, storyId}) {
     }
 
     return (
-        <div className='mt-5'>
+        <div className='mt-5  bg-gray-300/50'>
             <h1>Based on this image....</h1>
             <div className='flex items-center p-6 mt-5'>
                 {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black mt-4'>{story}</p> }
+                <div className='my-5 font-bold'>
+                    <button type='submit' className='border-2 border-black ml-4'>{isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}</button>
+                </div>
+                <div>
+                    {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-4 font-bold'> Save Story</button>}
+
+                </div>
             </div>
             <form onSubmit={handleImageToStorySubmit}>
-                <div className='my-5 font-bold'>
-                    <button type='submit' className='border-2 border-black'>{isStoryGenerated ? 'Regenerate' : 'Generate Story'}</button>
-                    {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-3'> Save Story</button>}
-                </div>
             </form>
             {error ? <p style={{color:'red'}}>{error}</p> : null}
         </div>

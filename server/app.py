@@ -129,12 +129,12 @@ def imageGenerator():
     if not imagePrompt:
         return make_response(jsonify({"error": "need imagePrompt"}), 400)
     try:
-        PROMPT = f"3d style image of ${imagePrompt}"
+        PROMPT = f"Create a movie poster for ${imagePrompt}"
         response = openai.Image.create(
             prompt=PROMPT, n=1, size="512x512", response_format="b64_json"
         )
         file_name = DATA_DIR / f"{PROMPT[:5]}-{response['created']}.json"
-
+        # import ipdb; ipdb.set_trace()
         with open(file_name, mode="w", encoding="utf-8") as file:
             json.dump(response, file)
 
@@ -163,15 +163,12 @@ def imageToStoryGenerator():
         }
 
         data = {"data": [{"image": f"data:image/png;base64,{image64}", "features": []}]}
-        # print(data)
+
         response = requests.post(
             "https://api.scenex.jina.ai/v1/describe", json=data, headers=headers
         )
-
+        
         story = response.json()["result"][0]["text"]
-        # import pdb; pdb.set_trace()
-        # story = response_data.get('story')
-        print(story)
 
         return make_response(jsonify({"story": story}))
     except Exception as e:

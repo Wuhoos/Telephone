@@ -21,7 +21,7 @@ function StoryList({user}) {
     }
 
     return (
-        <div>
+        <div className=' bg-gray-300/70'>
             {[...stories].filter((story)=>{
                 return (
                     story.theStory &&

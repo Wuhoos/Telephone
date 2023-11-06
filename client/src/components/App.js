@@ -23,9 +23,12 @@ function App(){
 
     return (
         <>
-            <div >
-                <h1 className='bg-red-200 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1>
+            <div className=' bg-gray-300/70'>
                 <div className='text-right mr-5 justify-end'>
+                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1> 
+                        : (
+                            <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Tell Me A Story</h1>
+                        )}
                     {user && (
                         <div className='text-right mr-5 justify-end'>
                             <NavBar user={user} setUser={setUser} />

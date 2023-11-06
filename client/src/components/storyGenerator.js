@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ImageGenerator from './imageGenerator';
 import { use } from 'bcrypt/promises';
+import ImageToStoryGenerator from './imageToStoryGenerator';
 
 
 function StoryGenerator({user}) {
@@ -11,8 +12,12 @@ function StoryGenerator({user}) {
     const [isStoryGenerated, setIsStoryGenerated] = useState(false)
     const [saveStory, setSaveStory] = useState(false)
     const [storyID, setStoryID] = useState(null)
-    // const [showImagePrompt, setShowImagePrompt] = useState('')
-    const [image64, setImage64] = useState('')
+    const [imageBase64, setImageBase64] = useState('')
+    const [showGenerator, setShowGenerator] = useState(true)
+
+    function toggleGenerator() {
+        setShowGenerator(!showGenerator)
+    }
 
     async function handleStorySubmit(e){
         e.preventDefault();
@@ -49,9 +54,6 @@ function StoryGenerator({user}) {
         setError('')
     }
 
-    function handleImagePrompt(baseImage){
-        setImage64(baseImage)
-    }
 
     async function handleSave() {
         try {
@@ -78,25 +80,34 @@ function StoryGenerator({user}) {
 
 
     return (
-        <div className='text-center'>
+        <div className='text-center bg-gray-300/70'>
             <form onSubmit={handleStorySubmit} className='text-center'>
                 <div>
                     <label>Write a short idea for a story</label>
                 </div>
                 <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} className='border-2' />
                 <div className='text-center'>
-                    <button type='submit' className='border-2 border-black font-bold'>{isStoryGenerated ? 'Regenrate' : 'Generates'} </button>
+                    <button type='submit' className='border-2 border-black font-bold mr-3' >
+                        {isStoryGenerated ? 'Regenerate' : 'Generate'} 
+                    </button>
                 </div>
             </form>
             <div className='mt-20'>
-                {isStoryGenerated && <button type='button' onClick={handleSave} className='border-2 mt-4 border-black font-bold'>Save Story</button>}
-                <h1 className='my-2'>This is a story about..... </h1>
+                {isStoryGenerated ? <h1 className='my-2'>This is a story about..... </h1> : null}
+
                 <div className='flex items-center box-border h-20 w-100 p-6 mt-5'>
                     {generating ? <em>Generating...</em> : <p className=' border-black border-2'>{story}</p>}
+                    <div className='ml-2'>
+                        {isStoryGenerated ? (
+                            <button type='button' onClick={handleSave} className='border-2 -4 border-black font-bold'>
+                            Save Story
+                        </button>
+                        ) : null}
+                    </div>
                 </div>
             </div>
             <div className='place-content-center'>
-                <ImageGenerator handleImagePrompt={handleImagePrompt} storyId={storyID} story={story}/>
+                {isStoryGenerated ?  <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/> : null}
             </div>
         </div>
     )
