@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import NewImageGenerator from './newImageGenerator';
 
 function ImageToStoryGenerator({image64, storyId}) {
 
@@ -11,7 +12,7 @@ function ImageToStoryGenerator({image64, storyId}) {
 
     async function handleImageToStorySubmit(e) {
         e.preventDefault()
-        // console.log(imageBase64)
+        console.log('somethign')
         setGenerating(true)
 
         try{
@@ -30,6 +31,7 @@ function ImageToStoryGenerator({image64, storyId}) {
             const data = await response.json()
             setImageToStoryPrompt(data.imageToStoryPrompt)
             setStory(data.story)
+            console.log(data.story)
             setIsStoryGenerated(true)
 
 
@@ -43,6 +45,7 @@ function ImageToStoryGenerator({image64, storyId}) {
     }
 
     async function saveImageToStory() {
+        console.log('test')
 
         try {
             const response= await fetch(`/saveStories/${storyId}`, {
@@ -60,21 +63,28 @@ function ImageToStoryGenerator({image64, storyId}) {
     }
 
     return (
-        <div className='mt-5  bg-gray-300/50'>
-            <h1>Based on this image....</h1>
-            <div className='flex items-center p-6 mt-5'>
-                {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black mt-4'>{story}</p> }
-                <div className='my-5 font-bold'>
-                    <button type='submit' className='border-2 border-black ml-4'>{isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}</button>
-                </div>
-                <div>
-                    {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-4 font-bold'> Save Story</button>}
+        <div className='mt-2 bg-gray-300/50'>
 
+            {isStoryGenerated ? <h1>Based on this image....</h1> : null}
+            <div className='flex justify-center p-6 '>
+                <div className=' my-5 font-bold'>
+                    <form onSubmit={handleImageToStorySubmit}>
+                            <button type='submit' className='border-2 border-black mb-4 ml-4 p-1'>
+                                {isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}
+                            </button>
+                    </form>
+                    <div className='flex justify-between'>
+                        {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black'>{story}</p> }
+                        <div>
+
+                            {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-4 font-bold p-1'> Save Story</button>}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <form onSubmit={handleImageToStorySubmit}>
-            </form>
+
             {error ? <p style={{color:'red'}}>{error}</p> : null}
+           {isStoryGenerated ? <NewImageGenerator story={story} storyId={storyId}/> : null}
         </div>
     )
 }

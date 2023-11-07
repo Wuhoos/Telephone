@@ -28,58 +28,6 @@ app.json.compact = False
 db.init_app(app)
 cors = CORS(app, resources="/*", support_credentials=True)
 
-# app.config["CORS_SUPPORTS_CREDENTIALS"] = True
-
-# app.config["CORS_ALLOW_HEADERS"] = [
-#     "Content-Type",
-#     "Authorization",
-#     "DNT",
-#     "X-CustomHeader",
-#     "Keep-Alive",
-#     "User-Agent",
-#     "X-Requested-With",
-#     "If-Modified-Since",
-#     "Cache-Control",
-# ]
-
-# app.config["CORS_EXPOSE_HEADERS"] = [
-#     "Content-Type",
-#     "Authorization",
-#     "DNT",
-#     "X-CustomHeader",
-#     "Keep-Alive",
-#     "User-Agent",
-#     "X-Requested-With",
-#     "If-Modified-Since",
-#     "Cache-Control",
-# ]
-
-# app.config["CORS_ORIGINS"] = "http:127.0.0.1:3000"
-
-# app.config["CORS_HEADERS"] = [
-#     "DNT",
-#     "X-CustomHeader",
-#     "Keep-Alive",
-#     "User-Agent",
-#     "X-Requested-With",
-#     "If-Modified-Since",
-#     "Cache-Control",
-#     "Content-Type",
-# ]
-
-# # CORS(app.app)
-
-# CORS(
-#     app,
-#     resources={
-#         r"*": {
-#             "origins": "http:127.0.0.1:3000",
-#             "allow_headers": ["Content-Type", "Authorization"],
-#             "expose_headers": ["Content-Type", "Authorization"],
-#             "supports_credentials": True,
-#         },
-#     },
-# )
 
 
 cors = CORS(app, resources={r"*": {"origins": "*"}}, support_credentials=True)
@@ -134,7 +82,7 @@ def imageGenerator():
             prompt=PROMPT, n=1, size="512x512", response_format="b64_json"
         )
         file_name = DATA_DIR / f"{PROMPT[:5]}-{response['created']}.json"
-        # import ipdb; ipdb.set_trace()
+        
         with open(file_name, mode="w", encoding="utf-8") as file:
             json.dump(response, file)
 
@@ -167,7 +115,7 @@ def imageToStoryGenerator():
         response = requests.post(
             "https://api.scenex.jina.ai/v1/describe", json=data, headers=headers
         )
-        
+        # import ipdb; ipdb.set_trace()
         story = response.json()["result"][0]["text"]
 
         return make_response(jsonify({"story": story}))

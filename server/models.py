@@ -25,6 +25,7 @@ class Story(db.Model, SerializerMixin):
     storyPrompt = db.Column(db.String)
     imageBase64 = db.Column(db.Text)
     storyFromImage = db.Column(db.Text)
+    imageFromNewStory = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 

@@ -25,15 +25,14 @@ function App(){
         <>
             <div className=' bg-gray-300/70'>
                 <div className='text-right mr-5 justify-end'>
-                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1> 
-                        : (
-                            <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Tell Me A Story</h1>
-                        )}
+                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1> : null}
                     {user && (
                         <div className='text-right mr-5 justify-end'>
                             <NavBar user={user} setUser={setUser} />
-                            {user ? (<Link to='/' className='mr-4'>Home</Link>): null}
-                            <Link to='/stories'>Stories</Link>
+                            <div className='mt-2'>
+                                {user ? (<Link to='/' className='mr-4 bg-black text-white p-1'>Home</Link>): null}
+                                <Link className='bg-black text-white p-1' to='/stories'>Stories</Link>
+                            </div>
                         </div>
                     )}
                 </div>

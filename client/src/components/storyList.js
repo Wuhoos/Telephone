@@ -4,7 +4,7 @@ import StoryItem from './story';
 function StoryList({user}) {
 
     const [stories, setStories] = useState('')
-    const [search, setSearch] = useState('')
+    
     
     useEffect(() => {
         fetch(`/users/${user.id}/stories`)
@@ -19,22 +19,26 @@ function StoryList({user}) {
     function handleDelete(id) {
         setStories((currentStories)=> currentStories.map((story) => story.id !== id))
     }
+    
+
 
     return (
+
         <div className=' bg-gray-300/70'>
+            {user ? <h1 className=' text-center font-bold font-serif text-5xl mb-4 underline'>Your Stories</h1> : null}
             {[...stories].filter((story)=>{
                 return (
                     story.theStory &&
                     story.imageBase64 &&
-                    story.storyFromImage
+                    story.storyFromImage &&
+                    story.imageFromNewStory
                 )
             })
             .reverse()
             .map((story)=> (
                 <div key={story.id} className='justify-items-center'>
                     <StoryItem story={story} onDelete={handleDelete}/>
-                </div>
-            ))
+                </div>))
             }
         </div>
     )

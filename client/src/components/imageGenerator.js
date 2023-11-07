@@ -61,26 +61,26 @@ function ImageGenerator({ storyId, story, setImageBase64}){
     
     
     return (
-        <div className='place-content-center mt-5 bg-gray-300/50'>
+        <div className=' mt-5 bg-gray-300/50'>
             <div className='flex justify-center mt-5 content-evenly'>
                 <div>
                     {image64 ? (
                             <img src={`data:image/png;base64,${image64}`} alt={imagePrompt} className='mt-5'/>
                     ) :null}
                 </div>
-                <div>
-                    
-                </div>
+            {generating ? <em>Please hold, generating image...</em> : null }
             <form onSubmit={handleImageSubmit}>
                 <div className='font-bold ml-4'>
-                    <button type='submit' className='border-2 border-black mt-5'>{isImageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
-                    {isImageGenerated && <button type="button" onClick={handleSaveImage} className='border-2 border-black ml-3'>Save Image</button>}
+                    <button type='submit' className='border-2 border-black mt-5 p-1'>{isImageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
+
+                    {isImageGenerated && <button type="button" onClick={handleSaveImage} className='border-2 border-black ml-3 p-1'>Save Image</button>}
                 </div>
             </form>
-            {generating ? <em>Please hold, generating image...</em> : null }
+
             {error ? <p style={{color:'red'}}>{error}</p> : null}
             </div>
                 {isImageGenerated ? <ImageToStoryGenerator image64={image64} storyId={storyId}/> : null}
+                {/* <ImageToStoryGenerator image64={image64} storyId={storyId}/> */}
         </div>
     )
 }

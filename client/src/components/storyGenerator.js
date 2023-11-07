@@ -15,9 +15,7 @@ function StoryGenerator({user}) {
     const [imageBase64, setImageBase64] = useState('')
     const [showGenerator, setShowGenerator] = useState(true)
 
-    function toggleGenerator() {
-        setShowGenerator(!showGenerator)
-    }
+
 
     async function handleStorySubmit(e){
         e.preventDefault();
@@ -81,13 +79,14 @@ function StoryGenerator({user}) {
 
     return (
         <div className='text-center bg-gray-300/70'>
+            {user ? <h1 className=' text-center font-bold font-serif text-5xl mb-8 underline'>Tell Me A Story</h1> : null}
             <form onSubmit={handleStorySubmit} className='text-center'>
                 <div>
-                    <label>Write a short idea for a story</label>
+                    <label>Write a short idea for a story:</label>
                 </div>
                 <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} className='border-2' />
                 <div className='text-center'>
-                    <button type='submit' className='border-2 border-black font-bold mr-3' >
+                    <button type='submit' className='border-2 border-black font-bold mr-3 p-1' >
                         {isStoryGenerated ? 'Regenerate' : 'Generate'} 
                     </button>
                 </div>
@@ -95,11 +94,11 @@ function StoryGenerator({user}) {
             <div className='mt-20'>
                 {isStoryGenerated ? <h1 className='my-2'>This is a story about..... </h1> : null}
 
-                <div className='flex items-center box-border h-20 w-100 p-6 mt-5'>
-                    {generating ? <em>Generating...</em> : <p className=' border-black border-2'>{story}</p>}
+                <div className='flex justify-center p-6 mt-5'>
+                    {generating ? <em>Generating...</em> : <p className=' border-black border-2 font-bold p-1'>{story}</p>}
                     <div className='ml-2'>
                         {isStoryGenerated ? (
-                            <button type='button' onClick={handleSave} className='border-2 -4 border-black font-bold'>
+                            <button type='button' onClick={handleSave} className='border-2 -4 border-black font-bold p-1'>
                             Save Story
                         </button>
                         ) : null}
@@ -108,6 +107,7 @@ function StoryGenerator({user}) {
             </div>
             <div className='place-content-center'>
                 {isStoryGenerated ?  <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/> : null}
+                {/* <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/> */}
             </div>
         </div>
     )
