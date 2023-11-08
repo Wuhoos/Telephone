@@ -63,28 +63,29 @@ function ImageToStoryGenerator({image64, storyId}) {
     }
 
     return (
-        <div className='mt-2 bg-gray-300/50'>
-
-            {isStoryGenerated ? <h1>Based on this image....</h1> : null}
-            <div className='flex justify-center p-6 '>
-                <div className=' my-5 font-bold'>
+        <div >
+            <div className='border-2 my-2 border-black/30 bg-gray-300/70 p-4'>
+                <div className='flex justify-center'>
+                    <h1 className='font-bold mb-2'>Based on this image....</h1> 
+                </div>
+                <div className='font-bold'>
                     <form onSubmit={handleImageToStorySubmit}>
-                            <button type='submit' className='border-2 border-black mb-4 ml-4 p-1'>
-                                {isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}
-                            </button>
-                    </form>
-                    <div className='flex justify-between'>
-                        {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black'>{story}</p> }
-                        <div>
-
-                            {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black ml-4 font-bold p-1'> Save Story</button>}
+                        <div className='flex justify-center'>
+                            <div>
+                                <button type='submit' className='border-2 border-black p-1'>{isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}</button>
+                                {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black font-bold p-1 ml-4'> Save Story</button>}
+                            </div>
                         </div>
-                    </div>
+                        <div className='flex justify-center my-3 mx-6'>
+                            {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black'>{story}</p> }
+                        </div>
+                    </form>
                 </div>
             </div>
 
             {error ? <p style={{color:'red'}}>{error}</p> : null}
-           {isStoryGenerated ? <NewImageGenerator story={story} storyId={storyId}/> : null}
+           {/* {isStoryGenerated ? <NewImageGenerator story={story} storyId={storyId}/> : null} */}
+           <NewImageGenerator story={story} storyId={storyId}/>
         </div>
     )
 }

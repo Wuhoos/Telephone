@@ -51,19 +51,23 @@ function NewImageGenerator({story, storyId}){
     }
     
     return (
-        <div>
-            <div className=' mt-5 bg-gray-300/20'>
-                <div className='flex justify-center mb-5 content-evenly'>
+        <div className=' bg-gray-300/70'>
+            <div className='p-4 content-evenly border-2 border-black/30'>
+                <form onSubmit={handleSubmit}>
+                    <div className='flex justify-center font-bold mb-2'>
+                        <button type='submit' className='border-2 border-black p-1'>{imageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
+                        {imageGenerated ? <button type='button' className='border-2 border-black ml-4 p-1' onClick={handleSaveNewImage}>Save Image</button> : null}
+                    </div>
+                </form>
+                <div className='flex justify-center mb-2'>
+                    {generating ? <em>Please hold, generating image...</em> : null }
+                    <em>Please hold, generating image...</em>
+                    {error ? <p style={{color:'red'}}>{error}</p> : null}
+                </div>
+                <div className='flex justify-center'>
                     {image64 ? (
                         <img src={`data:image/png;base64, ${image64}`} alt={story}/>
                     ): null}
-                <form onSubmit={handleSubmit}>
-                    <div  className='font-bold ml-4'>
-                        <button type='submit' className='border-2 border-black ml-4 mb-4 font-bold p-1'>{imageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
-
-                        {imageGenerated ? <button type='button' className='border-2 border-black ml-4 font-bold p-1' onClick={handleSaveNewImage}>Save Image</button> : null}
-                    </div>
-                </form>
                 </div>
             </div>
         </div>

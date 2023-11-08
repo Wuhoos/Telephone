@@ -61,26 +61,30 @@ function ImageGenerator({ storyId, story, setImageBase64}){
     
     
     return (
-        <div className=' mt-5 bg-gray-300/50'>
-            <div className='flex justify-center mt-5 content-evenly'>
-                <div>
-                    {image64 ? (
-                            <img src={`data:image/png;base64,${image64}`} alt={imagePrompt} className='mt-5'/>
-                    ) :null}
-                </div>
-            {generating ? <em>Please hold, generating image...</em> : null }
-            <form onSubmit={handleImageSubmit}>
-                <div className='font-bold ml-4'>
-                    <button type='submit' className='border-2 border-black mt-5 p-1'>{isImageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
-
-                    {isImageGenerated && <button type="button" onClick={handleSaveImage} className='border-2 border-black ml-3 p-1'>Save Image</button>}
-                </div>
-            </form>
-
-            {error ? <p style={{color:'red'}}>{error}</p> : null}
+        <div >
+            <div className=' p-4 mt-2 border-2 border-black/30 bg-gray-300/70'>
+                <form onSubmit={handleImageSubmit}>
+                    <div className='flex justify-center'>
+                        <div className='font-bold mb-2 '>
+                            <button type='submit' className='border-2 border-black p-1'>{isImageGenerated ? 'Regenerate Image' : 'Generate Image'}</button>
+                            {isImageGenerated && <button type="button" onClick={handleSaveImage} className='border-2 border-black ml-4 p-1'>Save Image</button>}
+                        </div>
+                    </div>
+                    <div className='flex justify-center mb-2'>
+                        {generating ? <em>Please hold, generating image...</em> : null }
+                        {error ? <p style={{color:'red'}}>{error}</p> : null}
+                        <em>Please hold, generating image...</em> 
+                    </div>
+                    <div className='flex justify-center'>
+                        {image64 ? (
+                                <img src={`data:image/png;base64,${image64}`} alt={imagePrompt}/>
+                        ) :null}
+                    </div>
+                </form>
+                
             </div>
-                {isImageGenerated ? <ImageToStoryGenerator image64={image64} storyId={storyId}/> : null}
-                {/* <ImageToStoryGenerator image64={image64} storyId={storyId}/> */}
+            {/* {isImageGenerated ? <ImageToStoryGenerator image64={image64} storyId={storyId}/> : null} */}
+            <ImageToStoryGenerator image64={image64} storyId={storyId}/>
         </div>
     )
 }
