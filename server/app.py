@@ -77,7 +77,7 @@ def imageGenerator():
     if not imagePrompt:
         return make_response(jsonify({"error": "need imagePrompt"}), 400)
     try:
-        PROMPT = f"Create a movie poster for ${imagePrompt}"
+        PROMPT = f"Create a photorealistic dramatic scene of ${imagePrompt}"
         response = openai.Image.create(
             prompt=PROMPT, n=1, size="512x512", response_format="b64_json"
         )

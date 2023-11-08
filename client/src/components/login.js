@@ -13,21 +13,23 @@ function Login({onLogin}) {
             {showLogin ? (
                 <div>
                 <LoginForm onLogin={onLogin}/>
-                <p className='underline'>Need a account?
-                    <button onClick={() => setShowLogin(false)} className='ml-4 font-bold'>
+                <div>
+                    <p className='underline p2'> Need a account?</p>
+                    <button onClick={() => setShowLogin(false)} className='font-bold ui black button'>
                         Sign Up
                     </button>
-                </p>
+                </div>
                 </div>
             ) : (
                 <div>
                     <SignUpForm onLogin={onLogin}/>
-                    <p className='underline'>
-                        Have an account?
-                        <button onClick={() => setShowLogin(true)} className='ml-4 font-bold'>
-                            Log In
-                        </button>
-                    </p>
+                    <div>
+                        <p className='underline'></p>
+                            Have an account?
+                            <button onClick={() => setShowLogin(true)} className='ui black button ml-4 font-bold '>
+                                Log In
+                            </button>
+                    </div>
                 </div>
             )}
         </div>

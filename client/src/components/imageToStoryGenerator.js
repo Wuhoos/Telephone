@@ -40,6 +40,7 @@ function ImageToStoryGenerator({image64, storyId}) {
             setError(error.message)
 
         }   finally {
+            setError(null)
             setGenerating(false)
         }
     }
@@ -56,6 +57,7 @@ function ImageToStoryGenerator({image64, storyId}) {
             if (!response.ok) {
                 throw new Error(`Failed to save: ${response.status}`)
             }
+            setError(null)
             setIsStorySaved(true)
         } catch (error) {
             setError(error.message)
@@ -64,28 +66,31 @@ function ImageToStoryGenerator({image64, storyId}) {
 
     return (
         <div >
-            <div className='border-2 my-2 border-black/30 bg-gray-300/70 p-4'>
-                <div className='flex justify-center'>
-                    <h1 className='font-bold mb-2'>Based on this image....</h1> 
+            <div className='border-2 my-2 border-black/30 bg-black/30 p-4'>
+                <div className='flex justify-center ui segment'>
+                    <h1 className='font-bold mb-2 ui header black header'>
+                        Based on this image....
+                        <img src='https://img.freepik.com/premium-photo/robot-reading-book_842454-1061.jpg' className='ui circular image ml-2'/>
+                        </h1> 
                 </div>
-                <div className='font-bold'>
+                <div >
                     <form onSubmit={handleImageToStorySubmit}>
                         <div className='flex justify-center'>
-                            <div>
-                                <button type='submit' className='border-2 border-black p-1'>{isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}</button>
-                                {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black font-bold p-1 ml-4'> Save Story</button>}
+                            <div className='font-bold my-2'>
+                                <button type='submit' className='border-2 border-black p-1 ui black button'>{isStoryGenerated ? 'Regenerate Story' : 'Generate Story'}</button>
+                                {isStoryGenerated && <button type='button' onClick={saveImageToStory} className='border-2 border-black font-bold p-1 ml-4 ui blue button'> Save Story</button>}
                             </div>
                         </div>
                         <div className='flex justify-center my-3 mx-6'>
-                            {generating ? <em>Generating...</em> : <p className='text-center border-2 border-black'>{story}</p> }
+                            {generating ? <em>Generating...</em> : <p className='text-center border-black p-1 text-2xl'>{story}</p> }
                         </div>
                     </form>
                 </div>
             </div>
 
-            {error ? <p style={{color:'red'}}>{error}</p> : null}
-           {/* {isStoryGenerated ? <NewImageGenerator story={story} storyId={storyId}/> : null} */}
-           <NewImageGenerator story={story} storyId={storyId}/>
+            {error ? <em style={{color:'red'}}>{error}</em> : null}
+           {isStoryGenerated ? <NewImageGenerator story={story} storyId={storyId}/> : null}
+           {/* <NewImageGenerator story={story} storyId={storyId}/> */}
         </div>
     )
 }

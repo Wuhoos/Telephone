@@ -4,6 +4,7 @@ import StoryGenerator from './storyGenerator'
 import Login from './login'
 import StoryList from './storyList'
 
+
 function App(){
     
     const [user, setUser] = useState(null)
@@ -36,14 +37,14 @@ function App(){
     return (
         <>
             <div className=' bg-gray-300/70'>
-                <div className='text-right mr-5 justify-end'>
-                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl mt-8 underline'>Telephone</h1> : null}
+                <div className='text-right justify-end'>
+                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl underline'>Telephone</h1> : null}
                     {user && (
-                        <div className=' mr-5 justify-end'>
-                            <div className='mt-3 p-3'>
-                                {user ? (<Link to='/' className='mr-4 bg-black text-white p-1'>Home</Link>): null}
-                                <Link className='bg-black text-white p-1' to='/stories'>Stories</Link>
-                                <button onClick={logout} className='border-2 text-white bg-black border-black ml-4'>Logout</button>
+                        <div className=' mr-5 justify-end ' class='ui inverted segment'>
+                            <div className='mt-3 p-3' >
+                                {user ? (<Link to='/' className='mr-4 bg-black text-white p-1' class='ui blue  button'>Home</Link>): null}
+                                <Link className='bg-black text-white p-1' to='/stories' class='ui blue inverted button '>Stories</Link>
+                                <button onClick={logout} className='' class='ui blue button'>Logout</button>
                             </div>
                         </div>
                     )}

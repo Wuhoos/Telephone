@@ -28,14 +28,21 @@ function LoginForm({onLogin}) {
     }
 
     return (
-        <form onSubmit={handleLogin} className="space-y-10 underline mt-20 font-bold">
+        <form onSubmit={handleLogin} className="space-y-10 underline mt-20 font-bold ui form">
             <div>
-                <div className="mb-2">
-                    Username:
+                <div className="mb-2 inline field">
+                    <label className="ui right pointing label">
+                        <i class="user icon"></i>
+                        Username:
+                    </label>
                     <input type='text' id='username' autoComplete='off' value={username} onChange={(e)=>setUsername(e.target.value)} className="border-2 ml-4"/>
                 </div>
-                <div>
-                    Password:
+                <div class="ui divider"></div>
+                <div className="mb-2 inline field">
+                    <label className="ui right pointing label">
+                    <i class="lock icon"></i>
+                        Password:
+                    </label>
                     <input type='text' id='password' autoComplete='off' value={password} onChange={(e)=>setPassword(e.target.value)} className="border-2 ml-4"/>
                 </div>
             </div>
