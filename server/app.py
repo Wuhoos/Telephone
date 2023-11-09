@@ -50,7 +50,7 @@ def storyGenerator():
         messages = [
             {
                 "role": "user",
-                "content": f"write me a short story that is less than 75 words about {prompt}",
+                "content": f"write a short movie synopsis that is less than 75 words about {prompt}",
             }
         ]
         response = openai.ChatCompletion.create(
@@ -77,7 +77,7 @@ def imageGenerator():
     if not imagePrompt:
         return make_response(jsonify({"error": "need imagePrompt"}), 400)
     try:
-        PROMPT = f"Create a dramatic movie scene of ${imagePrompt}"
+        PROMPT = f"Create a dramatic movie poster of ${imagePrompt}"
         response = openai.Image.create(
             prompt=PROMPT, n=1, size="512x512", response_format="b64_json"
         )
