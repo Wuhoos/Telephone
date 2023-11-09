@@ -35,7 +35,7 @@ function App(){
     },[])
 
     return (
-        <>
+        <div>
             <div className=' bg-gray-300/70'>
                 <div className='text-right justify-end'>
                     {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl underline ui huge header'>
@@ -57,7 +57,7 @@ function App(){
                 <Route path='/' element={user ? <StoryGenerator user={user}/> : <Login onLogin={setUser}/>} />
                 <Route path='/stories' element={user ? <StoryList user={user}/> : <Login onLogin={setUser}/>} />
             </Routes>
-        </>
+        </div>
        
     )
 }
