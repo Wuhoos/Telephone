@@ -13,23 +13,24 @@ function Login({onLogin}) {
             {showLogin ? (
                 <div>
                 <LoginForm onLogin={onLogin}/>
-                <div>
-                    <p className='underline p2'> Need a account?</p>
-                    <button onClick={() => setShowLogin(false)} className='font-bold ui black button'>
-                        Sign Up
-                    </button>
-                </div>
+                    <div>
+                        <label className='underline p2'> Need a account?</label>
+                        <button onClick={() => setShowLogin(false)} className='ml-4 my-4 font-bold'>
+                            Sign Up
+                        </button>
+                    </div>
+                    <img src='https://miro.medium.com/v2/resize:fit:1400/1*UwwRH_FLxcQfz-74HmqgMw.png' class='ui fluid image'/>
                 </div>
             ) : (
                 <div>
                     <SignUpForm onLogin={onLogin}/>
                     <div>
-                        <p className='underline'></p>
-                            Have an account?
-                            <button onClick={() => setShowLogin(true)} className='ui black button ml-4 font-bold '>
-                                Log In
-                            </button>
+                        <label className='underline'> Have an account?</label>
+                        <button onClick={() => setShowLogin(true)} className=' ml-4 my-4 font-bold '>
+                            Log In
+                        </button>
                     </div>
+                    <img src='https://miro.medium.com/v2/resize:fit:1400/1*UwwRH_FLxcQfz-74HmqgMw.png' class='ui fluid image'/>
                 </div>
             )}
         </div>

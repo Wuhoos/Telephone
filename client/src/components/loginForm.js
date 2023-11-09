@@ -46,7 +46,7 @@ function LoginForm({onLogin}) {
                     <input type='text' id='password' autoComplete='off' value={password} onChange={(e)=>setPassword(e.target.value)} className="border-2 ml-4"/>
                 </div>
             </div>
-            <button type='submit' className="">
+            <button type='submit' className="font-bold ui black button">
                 {isLoading ? 'Loading...' : 'Login'}
             </button>
             {errors.map((err, index) => (

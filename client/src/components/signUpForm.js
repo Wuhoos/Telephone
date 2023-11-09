@@ -47,7 +47,9 @@ function SignUpForm({onLogin}){
                     </div>
                 </div>
             </div>
-            <button type='submit'>{isLoading ? 'Loading...' : 'Sign Up'}</button>
+            <button type='submit' className='ui black button'>
+                {isLoading ? 'Loading...' : 'Sign Up'}
+            </button>
             {errors.map((err) => (
                 <p key={err} style={{color: 'red'}} >{err}</p>
             ))}

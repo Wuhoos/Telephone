@@ -80,18 +80,18 @@ function StoryGenerator({user}) {
     return (
         <div className='flex flex-col justify-evenly'>
             <div className='text-center border-2 border-black/30 bg-black/30'>
-                <div>
+                
 
-                <div className='flex justify-center'>
-                    {user ? (<h1 className=' text-center font-bold font-serif text-5xl my-6 underline ui header'>
-                            Tell Me A Story
-                        </h1>) : null}
+                <div className='flex justify-center my-4'>
                     <img src='https://www.davidmeermanscott.com/hs-fs/hubfs/AI%20telephone.jpg?width=450&height=301&name=AI%20telephone.jpg' class='ui medium circular image ml-2'/>
                 </div>
-                </div>
+                {user ? (<h1 className=' text-center font-bold font-serif text-5xl my-6 underline ui header'>
+                        Did Your Hear About ...
+                    </h1>) : null}
+                
                 <form onSubmit={handleStorySubmit} className='text-center'>
                     <div className='my-2'>
-                        <label className='ui blue label'>Write a short idea for a story:</label>
+                        <label className='ui blue label'>Write a short idea for a movie :</label>
                     </div>
                     <textarea type='text' onChange={handlePromptSubmit} style={{width: '400px', height: '200px'}} className='border-2' />
                     <div className='text-center'>
@@ -106,7 +106,7 @@ function StoryGenerator({user}) {
 
                             {isStoryGenerated ? (<h1 className='my-2 ui header black header'>
                                 <img src='https://assets-global.website-files.com/627a5f477d5ec9079c88f0e2/63a572326ccbdb4afe5caeb8_ai-writing-assistant-image.jpg' className='ui circular image ml-2'/>
-                                This is a story about..... 
+                                This is about..... 
                                 </h1>) : null}
                         </div>
 
@@ -125,7 +125,7 @@ function StoryGenerator({user}) {
             </div>
             <div>
                 {isStoryGenerated ?  <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/> : null}
-                <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/>
+                {/* <ImageGenerator storyId={storyID} story={story} setImageBase64={setImageBase64}/> */}
             </div>
         </div>
     )

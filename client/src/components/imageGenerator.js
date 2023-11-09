@@ -89,7 +89,7 @@ function ImageGenerator({ storyId, story, setImageBase64}){
                 
             </div>
             {isImageGenerated ? <ImageToStoryGenerator image64={image64} storyId={storyId}/> : null}
-            <ImageToStoryGenerator image64={image64} storyId={storyId}/>
+            {/* <ImageToStoryGenerator image64={image64} storyId={storyId}/> */}
         </div>
     )
 }

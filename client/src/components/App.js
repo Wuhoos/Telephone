@@ -38,12 +38,15 @@ function App(){
         <>
             <div className=' bg-gray-300/70'>
                 <div className='text-right justify-end'>
-                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl underline'>Telephone</h1> : null}
+                    {!user ? <h1 className=' bg-gray-300/70 text-center font-bold font-serif text-5xl underline ui huge header'>
+                        Telephone
+                        <img src='https://img.freepik.com/premium-photo/shellphone-ai-generated_1007879-33.jpg' className='ui circular image ml-4'/>
+                        </h1> : null}
                     {user && (
                         <div className=' mr-5 justify-end ' class='ui inverted segment'>
                             <div className='mt-3 p-3' >
                                 {user ? (<Link to='/' className='mr-4 bg-black text-white p-1' class='ui blue  button'>Home</Link>): null}
-                                <Link className='bg-black text-white p-1' to='/stories' class='ui blue inverted button '>Stories</Link>
+                                <Link className='bg-black text-white p-1' to='/stories' class='ui blue inverted button '>Gallery</Link>
                                 <button onClick={logout} className='' class='ui blue button'>Logout</button>
                             </div>
                         </div>
